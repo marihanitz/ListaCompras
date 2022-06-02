@@ -31,6 +31,7 @@ let cuerpotabla = tabla.getElementsByTagName("tbody");     //Se refiere al cuerp
 
 let contador = 0;
 let totalPrec = 0;
+let totalProd = 0;
 let agregar = document.getElementById("btnAgregar");
 console.log(agregar);
 // agregar.addEventListener("click",)
@@ -101,6 +102,11 @@ agregar.addEventListener("click", (event)=> {
     let cantidad = parseFloat(txtNumber.value);   //para obtener la cantidad convierte el input de cantidad a numero
     totalPrec += precio * cantidad;  // obtiene el precio total precio unitario*cantidad
     total.innerHTML = `$ ${totalPrec.toFixed(2)}`; // muestra en el html el precio total
+
+    
+    totalProd += (cantidad<1)? Math.ceil(cantidad) : parseInt(cantidad);   // solo redondea cantidades 0.5 a 1 y las demas se queda con el entero
+    // totalProd += Math.ceil(cantidad);        // Redondea al entero superior
+    document.getElementById("totalProduct").innerHTML = totalProd;   // Muestra el total de productos en el span totalProd
 
     
     let tmp = `<tr>
