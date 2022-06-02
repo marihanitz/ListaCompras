@@ -98,15 +98,28 @@ agregar.addEventListener("click", (event)=> {
     // console.log("Click en el botón",event.target);
     contador++;
     document.getElementById("contadorProduct").innerHTML= contador;
+
+  
+
     let precio = (Math.floor( (Math.random()*50) *100) )/100;
     let cantidad = parseFloat(txtNumber.value);   //para obtener la cantidad convierte el input de cantidad a numero
     totalPrec += precio * cantidad;  // obtiene el precio total precio unitario*cantidad
     total.innerHTML = `$ ${totalPrec.toFixed(2)}`; // muestra en el html el precio total
 
-    
+
+
+
     totalProd += (cantidad<1)? Math.ceil(cantidad) : parseInt(cantidad);   // solo redondea cantidades 0.5 a 1 y las demas se queda con el entero
     // totalProd += Math.ceil(cantidad);        // Redondea al entero superior
     document.getElementById("totalProduct").innerHTML = totalProd;   // Muestra el total de productos en el span totalProd
+   
+
+    // Guardar en el local storage     setItem = guardar  ("Nombre de como se guarda", lo que se guarda)
+    window.localStorage.setItem("totalProduct", totalProd)
+    window.localStorage.setItem("total", totalPrec );
+    window.localStorage.setItem("contadorProduct", contador);
+
+
 
     
     let tmp = `<tr>
@@ -136,3 +149,26 @@ txtNumber.addEventListener("blur",(event)=>{
     event.target.value = event.target.value.trim();
    
 }) //reacciona a evento  cuando se pierde el foco
+
+
+window.addEventListener("load", function(){                             // Cuando la pagina termine de cargar
+
+    if(localStorage.getItem("contadorProduct")!=null){                  // Verficia si tiene valor !=0 a contador de productos
+        contador = parseInt(localStorage.getItem("contadorProduct"));
+        document.getElementById("contadorProduct").innerHTML=contador;   
+    }
+
+    if(localStorage.getItem("totalProduct")!=null){                      // Verifica si hay cantidad de productos
+        totalProd = parseInt(localStorage.getItem("totalProduct"));
+        document.getElementById("totalProduct").innerHTML= totalProd;
+    }
+
+    if(localStorage.getItem("total")!=null){                             // Verifica si hay total
+        totalPrec = parseFloat(localStorage.getItem("total"));         
+        document.getElementById("costoTotal").innerHTML= `$ ${totalPrec}`;
+    }
+ 
+
+
+
+});
