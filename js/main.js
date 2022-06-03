@@ -119,7 +119,7 @@ agregar.addEventListener("click", (event)=> {
     window.localStorage.setItem("total", totalPrec );
     window.localStorage.setItem("contadorProduct", contador);
 
-
+   
 
     
     let tmp = `<tr>
@@ -167,8 +167,5 @@ window.addEventListener("load", function(){                             // Cuand
         totalPrec = parseFloat(localStorage.getItem("total"));         
         document.getElementById("costoTotal").innerHTML= `$ ${totalPrec}`;
     }
- 
-
-
 
 });
