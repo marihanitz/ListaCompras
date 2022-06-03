@@ -60,6 +60,8 @@ function validarCantidad () {
     return true;
 }
 
+let datos = [];
+
 agregar.addEventListener("click", (event)=> {
     event.preventDefault();
     if ( (!validarnombre()) || (!validarCantidad ()) ){
@@ -119,8 +121,18 @@ agregar.addEventListener("click", (event)=> {
     window.localStorage.setItem("total", totalPrec );
     window.localStorage.setItem("contadorProduct", contador);
 
-   
+   // Estructura de JSON {string:value,string:value}
+    // {"id": contador, "nombre": txtNombre.value,"cantidad": txtNumber.value,"precio":precio}  
 
+   let elemento = `{ "id": ${contador},
+                    "nombre": "${txtNombre.value}",
+                    "cantidad": ${txtNumber.value},
+                    "precio" : ${precio}
+                   }`;
+
+    datos.push(JSON.parse(elemento));  //parse toma una cadena y la convierte a objeto
+    localStorage.setItem("elementosTabla", JSON.stringify(datos) ); //stringify convierte a cadena
+    console.log(datos);
     
     let tmp = `<tr>
     <th scope="row">${contador}</th>
@@ -168,4 +180,18 @@ window.addEventListener("load", function(){                             // Cuand
         document.getElementById("costoTotal").innerHTML= `$ ${totalPrec}`;
     }
 
+    // Verificar si la tabla de productos tiene datos y hacer todo lo de subir los productos a la tabla html
+    if(localStorage.getItem("elementosTabla")!= null){
+        datos = JSON.parse(localStorage.getItem("elementosTabla"));          //Convierte a objetos el arreglo
+        datos.forEach(element => {                  // Para cada elemetno del arreglo en la posicion de la tabla 0 y se incrementa
+            cuerpotabla[0].innerHTML +=   `<tr>     
+            <th scope="row">${element.id}</th>
+            <td> ${element.nombre}</td>
+            <td> ${element.cantidad}</td>
+            <td>$ ${element.precio}</td>
+            </tr>
+            <tr>`;
+        });
+       
+     }
 });
